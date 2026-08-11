@@ -1,0 +1,23 @@
+# Bagimliliklar
+node_modules/
+
+# Ortam degiskenleri - ASLA commit etme
+.env
+.env.*
+!.env.example
+
+# Netlify
+.netlify/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Log ve gecici dosyalar
+*.log
+npm-debug.log*
+tmp/
+.cache/
