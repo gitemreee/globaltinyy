@@ -1,0 +1,18 @@
+{
+  "brand": "Global Investment Yapı Geliştirme A.Ş.",
+  "shortBrand": "Global Investment",
+  "tagline": "Modern Tiny House Yaşam Alanları",
+  "colors": ["#ADFCF9", "#89A894", "#4B644A", "#49393B", "#341C1C"],
+  "phone": "+90 546 655 70 70",
+  "email": "info@globalinvestment.com.tr",
+  "targets": {
+    "netlify": {
+      "siteUrl": "https://globaltinyhouse.netlify.app",
+      "basePath": "/"
+    },
+    "pages": {
+      "siteUrl": "https://gitemreee.github.io/globaltinyy",
+      "basePath": "/globaltinyy/"
+    }
+  }
+}

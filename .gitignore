@@ -21,3 +21,6 @@ desktop.ini
 npm-debug.log*
 tmp/
 .cache/
+
+# Build ciktisi - iki platform da kendi build adiminda uretir
+dist/
