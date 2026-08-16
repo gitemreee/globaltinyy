@@ -7,7 +7,7 @@
   "email": "info@globalinvestment.com.tr",
   "targets": {
     "netlify": {
-      "siteUrl": "https://globaltinyhouse.netlify.app",
+      "siteUrl": "https://globalyapicelik.net",
       "basePath": "/"
     },
     "pages": {

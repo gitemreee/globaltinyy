@@ -6,7 +6,7 @@ Kaynak `data/` + `src/`, çıktı `dist/`. Tek komutla hem **Netlify** hem **Git
 | | |
 |---|---|
 | Repo | https://github.com/gitemreee/globaltinyy |
-| Netlify | https://globaltinyhouse.netlify.app |
+| Netlify | https://globalyapicelik.net |
 | GitHub Pages | https://gitemreee.github.io/globaltinyy |
 
 ## Yapı
@@ -32,7 +32,7 @@ Fark iki değerde toplanır ve `data/site.json` içindeki `targets` bloğundan g
 | | Netlify | GitHub Pages |
 |---|---|---|
 | `basePath` | `/` | `/globaltinyy/` |
-| `siteUrl` | `https://globaltinyhouse.netlify.app` | `https://gitemreee.github.io/globaltinyy` |
+| `siteUrl` | `https://globalyapicelik.net` | `https://gitemreee.github.io/globaltinyy` |
 | İletişim formu | Netlify Forms (`teklif`) | JS demo (gönderim yok) |
 
 Hedef `DEPLOY_TARGET` ile seçilir (`netlify` | `pages`). Verilmezse Netlify ortamı
