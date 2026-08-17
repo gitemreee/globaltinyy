@@ -1,39 +1,42 @@
 # Marka · GLOBAL YAPI GELİŞTİRME A.Ş.
 
-## Seçilen yön: ÇATI ÇİZGİSİ · endüstriyel ton
-
-Fikir: çatı tek bir harfe sıkışmaz. Saçak **bütün kelimenin üstünden** geçer ve
-**A'nın tam apeksinde** kırılır — yapı, markanın üstünü örter. Uçlardaki mertek
-ayakları çatıyı kelimeye kilitler.
-
-Amblem bu saçağın indirgenmiş hâli: **portal** — çatı + iki ayak.
-Ayrı bir ikon icat edilmedi, logonun kendi parçası küçültüldü.
+Onaylı logo müşteriden geldi (PDF). `amblem.py` bu amblemi ölçerek
+vektöre çevirir — çatı yüksekliği parametrik olsun diye.
 
 ```bash
-python3 marka/final.py     # marka/svg-final/*.svg
+python3 marka/amblem.py     # marka/svg-marka/*.svg
 ```
 
-### Ölçüler
-| | |
+## Amblem
+
+"G" harfi bir ev kesitiyle birleşir: sol duvar + taban G'nin gövdesi,
+ortadaki yatay çubuk G'nin kirişi, bakır parçalar vurgu.
+
+| Parametre | |
 |---|---|
-| Gövde çizgisi | 17 (cap 100'e göre) |
-| Saçak çizgisi | gövdenin %72'si — uzun olduğu için ince olmalı |
-| Tracking | 26 |
-| Saçak tepe / saçak hizası | −76 / −32 |
-| Kerning | `KERN` tablosu + kalın ağırlık düzeltmesi |
+| `tepe` | çatı tepesinin y'si. 0 = orijinal; büyüdükçe çatı aşağı kısalır |
+| `KAL` | şerit kalınlığı (75) |
+| etek | 299 — sabit, çatı kısalırken duvar kotu değişmez |
 
-A crossbar'sızdır (saf çatı) — bilinçli karar.
+Çatı kısalınca eğim değişir; şerit kalınlığı eğime dik ölçülüp dikey
+izdüşümü yeniden hesaplanır (`boy / apex_x`), yoksa çatı incelir.
 
-## Reddedilen denemeler
+## Renkler (kimlik dosyasından)
 
-- `logo.py` — v1/v3. Çatılı A + dörtlü pencere O. Amblem jenerikti
-  (çatı+daire her inşaat firmasında var), wordmark imza taşımıyordu.
-- `yonler.py` — v4. Üç alternatif; Y2 çatı çizgisi seçildi.
+| | | |
+|---|---|---|
+| Ana renk | `#2F3336` | amblem, logotype, koyu zeminler |
+| Bakır bronz | `#B87333` | vurgu — PANTONE 876 C / RAL 8001 |
+| Nötr gri | `#A6A39A` | ikincil metin, ayraçlar |
+| Kağıt | `#F5F3F0` | zemin |
 
-Arşiv olarak duruyor; üretim dosyası `final.py`.
+Oran: koyu %60 · kağıt %25 · bronz %10 · nötr %5. Bronz her zaman vurgudur.
 
-## Sıradaki
+## Yazı ailesi
 
-Tipografi ve renk paleti seçilecek, sonra iki kataloğa entegre edilecek.
-Açıklama satırı (`YAPI GELİŞTİRME A.Ş.`) şu an sistem fontuyla — final
-pakette outline'a çevrilmeli.
+Questrial (logotype + başlık) · Inter (metin) · IBM Plex Mono (teknik).
+
+## Arşiv
+
+`logo.py`, `yonler.py`, `final.py`, `kimlik.py` — müşteri logosu gelmeden
+önceki denemeler. Üretimde kullanılmıyor.
