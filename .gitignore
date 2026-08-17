@@ -24,3 +24,6 @@ tmp/
 
 # Build ciktisi - iki platform da kendi build adiminda uretir
 dist/
+
+# Katalog PDF ciktisi - kaynaktan uretilir
+katalog/*.pdf
