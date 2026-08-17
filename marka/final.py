@@ -21,10 +21,11 @@ def p(v): return f"{v:.2f}".rstrip('0').rstrip('.')
 
 
 # ------------------------------------------------------------------ harfler
-def G_():
+def G_(bar=-2.0):
+    """bar: G'nin iç çubuğunun bittiği x (merkeze göre; küçüldükçe uzar)."""
     a = math.radians(-35)
     return {'w': 2*R, 'd': [f"M {p(R+R*math.cos(a))} {p(50+R*math.sin(a))} "
-                            f"A {p(R)} {p(R)} 0 1 0 {p(2*R)} 50 H {p(R-2)}"]}
+                            f"A {p(R)} {p(R)} 0 1 0 {p(2*R)} 50 H {p(R+bar)}"]}
 def L_(): return {'w': L_W, 'd': [f"M 0 0 V {p(CAP)} H {p(L_W)}"]}
 def O_(): return {'w': 2*R, 'd': [f"M 0 50 A {p(R)} {p(R)} 0 1 1 {p(2*R)} 50 "
                                   f"A {p(R)} {p(R)} 0 1 1 0 50 Z"]}
@@ -37,9 +38,9 @@ def A_(): return {'w': A_W, 'd': [f"M 0 {p(CAP)} L {p(A_W/2)} 0 L {p(A_W)} {p(CA
 KERN = {('G','L'): -3, ('L','O'): -15, ('O','B'): -7, ('B','A'): 3, ('A','L'): -5}
 
 
-def word(w, track, ink=INK):
+def word(w, track, ink=INK, gbar=-2.0):
     """GLOBAL. Döner: (svg, toplam_genişlik, {harf_indeksi: x_konumu})."""
-    seq = [('G',G_()),('L',L_()),('O',O_()),('B',B_()),('A',A_()),('L',L_())]
+    seq = [('G',G_(gbar)),('L',L_()),('O',O_()),('B',B_()),('A',A_()),('L',L_())]
     parts, pos, x = [], {}, 0.0
     for i,(n,gl) in enumerate(seq):
         pos[i] = x
@@ -55,14 +56,14 @@ def word(w, track, ink=INK):
     return g, x - track, pos
 
 
-def roof(total, apex_x, w, ink=INK, ayak=True, top=-76.0, eave=-32.0, over=20.0):
+def roof(total, apex_x, w, ink=INK, ayak=16.0, top=-76.0, eave=-32.0, over=20.0):
     """Saçak. A'nın apeksinde kırılır; uçlarda mertek ayakları aşağı iner."""
     d = f"M {p(-over)} {p(eave)} L {p(apex_x)} {p(top)} L {p(total+over)} {p(eave)}"
     out = f'<path d="{d}"/>'
     if ayak:
         # Mertek ucu: çatıyı kelimeye kilitleyen kısa dikey iniş.
-        out += (f'<path d="M {p(-over)} {p(eave)} V {p(eave+16)}"/>'
-                f'<path d="M {p(total+over)} {p(eave)} V {p(eave+15)}"/>')
+        out += (f'<path d="M {p(-over)} {p(eave)} V {p(eave+ayak)}"/>'
+                f'<path d="M {p(total+over)} {p(eave)} V {p(eave+ayak)}"/>')
     return (f'<g fill="none" stroke="{ink}" stroke-width="{p(w)}" stroke-linecap="butt" '
             f'stroke-linejoin="miter" stroke-miterlimit="10">{out}</g>')
 
@@ -76,11 +77,12 @@ def svg(inner, x, y, w, h):
 W, TRACK = 17.0, 26.0          # endüstriyel ağırlık
 
 
-def logo(ink=INK, ayak=True, desc=True, w=W, track=TRACK):
-    m, tw, pos = word(w, track, ink)
+def logo(ink=INK, ayak=16.0, desc=True, w=W, track=TRACK,
+         top=-76.0, eave=-32.0, over=20.0, roof_r=0.72, gbar=-2.0):
+    m, tw, pos = word(w, track, ink, gbar)
     apex = pos[4] + A_W/2                       # A'nın tam orta ekseni
-    body = roof(tw, apex, w * 0.72, ink, ayak) + m   # saçak gövdeden ince
-    top = -76.0 - w/2 - 6
+    body = roof(tw, apex, w * roof_r, ink, ayak, top, eave, over) + m
+    top = top - w/2 - 6
     h = CAP - top + (34 if desc else 0) + 8
     if desc:
         body += (f'<text x="0" y="{p(CAP + 30)}" '
