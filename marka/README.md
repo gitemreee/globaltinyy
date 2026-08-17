@@ -40,3 +40,40 @@ Questrial (logotype + başlık) · Inter (metin) · IBM Plex Mono (teknik).
 
 `logo.py`, `yonler.py`, `final.py`, `kimlik.py` — müşteri logosu gelmeden
 önceki denemeler. Üretimde kullanılmıyor.
+
+## Marka Kimliği Rehberi (v2.0)
+
+```bash
+python3 marka/kimlik_pdf.py   # marka/kimlik.html
+# sonra Chromium ile A2 yatay PDF'e basılır
+```
+
+11 sayfa, 594×420 mm. Müşterinin v1 dosyasının yapısı korundu; fark
+mockup'larda: düz vektör ikon yerine gölge katmanları, yüzey gradyanları,
+kağıt/kumaş dokusu (SVG `feTurbulence`) ve perspektif kullanıldı.
+
+| | |
+|---|---|
+| 01 | Kapak |
+| 02 | Logo yapısı ve kilit versiyonları |
+| 03 | Bakır Bronz paleti + zemin kombinasyonları |
+| 04 | Yazı ailesi + ölçek merdiveni |
+| 05 | Zarf · Antet · Kartvizit |
+| 06 | Tabela · Tiny House |
+| 07 | Tişört · Şapka |
+| 08 | Kupa · Suluk · Anahtarlık |
+| 09 | Sosyal medya · Web sitesi |
+| 10 | Koruma alanı · En küçük ölçü · Yapılmaz |
+| 11 | Kapanış |
+
+### v1'e göre değişenler
+- Çatı kısaltıldı (`TEPE = 70`) — amblem daha yatay, daha oturmuş
+- Kilit içinde amblem küçültüldü; logotype ile dengesi düzeltildi
+- Tüm mockup'lar gerçekçi hacim ve malzeme hissiyle yeniden çizildi
+- Yeni sayfa: koruma alanı, en küçük ölçü ve yapılmaz kuralları
+
+## Teslim seti
+
+`marka/teslim/` — dikey, yatay, amblem, negatif, tek renk.
+Kilit dosyalarındaki yazı hâlâ canlı metin; **baskıya gitmeden önce
+outline'a çevrilmeli** (amblem zaten saf vektör).

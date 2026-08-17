@@ -87,3 +87,48 @@ if __name__ == '__main__':
             open(os.path.join(OUT, f'amblem-{ad}-{tag}.svg'), 'w').write(
                 amblem_svg(t, **kw)); n += 1
     print(f'{n} SVG → {OUT}')
+
+
+def kilit_svg(tepe=70.0, ink=INK, bronz=BRONZ, dikey=True):
+    """Amblem + GLOBAL + açıklama. Yazı Questrial; baskı öncesi outline'a çevrilmeli."""
+    amb = amblem_svg(tepe, ink=ink, bronz=bronz)
+    ic = amb[amb.index('>', amb.index('<svg')) + 1:-6]
+    vb = amb.split('viewBox="')[1].split('"')[0].split()
+    ax, ay, aw, ah = (float(v) for v in vb)
+    if dikey:
+        ol, oy = 620.0, 60.0                       # ölçek referansı
+        s = ol / aw
+        gw, gh = ol * 1.15, ah * s + 300
+        x0 = (gw - ol) / 2
+        return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {_n(gw)} {_n(gh)}" '
+                f'width="{_n(gw)}" height="{_n(gh)}">'
+                f'<g transform="translate({_n(x0)},0) scale({s:.4f}) translate({_n(-ax)},{_n(-ay)})">{ic}</g>'
+                f'<text x="{_n(gw/2)}" y="{_n(ah*s+165)}" text-anchor="middle" '
+                f'font-family="Questrial, sans-serif" font-size="150" letter-spacing="45" '
+                f'fill="{ink}" dx="22">GLOBAL</text>'
+                f'<text x="{_n(gw/2)}" y="{_n(ah*s+248)}" text-anchor="middle" '
+                f'font-family="Inter, sans-serif" font-size="35" letter-spacing="12" '
+                f'fill="{bronz}" dx="6">YAPI GELİŞTİRME A.Ş.</text></svg>')
+    ah2 = 300.0
+    s = ah2 / ah
+    aw2 = aw * s
+    gap = 70.0
+    gw, gh = aw2 + gap + 760, ah2
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {_n(gw)} {_n(gh)}" '
+            f'width="{_n(gw)}" height="{_n(gh)}">'
+            f'<g transform="scale({s:.4f}) translate({_n(-ax)},{_n(-ay)})">{ic}</g>'
+            f'<text x="{_n(aw2+gap)}" y="{_n(ah2*0.56)}" font-family="Questrial, sans-serif" '
+            f'font-size="132" letter-spacing="38" fill="{ink}">GLOBAL</text>'
+            f'<text x="{_n(aw2+gap+4)}" y="{_n(ah2*0.85)}" font-family="Inter, sans-serif" '
+            f'font-size="31" letter-spacing="11" fill="{bronz}">YAPI GELİŞTİRME A.Ş.</text></svg>')
+
+
+def teslim_seti(tepe=70.0):
+    """Kimlik rehberinde adı geçen beş dosya."""
+    return {
+        'GLOBAL-logo-dikey.svg':  kilit_svg(tepe),
+        'GLOBAL-logo-yatay.svg':  kilit_svg(tepe, dikey=False),
+        'GLOBAL-amblem.svg':      amblem_svg(tepe),
+        'GLOBAL-negatif.svg':     kilit_svg(tepe, ink='#FFFFFF'),
+        'GLOBAL-tekrenk.svg':     kilit_svg(tepe, ink=INK, bronz=INK),
+    }
