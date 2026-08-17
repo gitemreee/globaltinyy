@@ -1,0 +1,162 @@
+/* ============================================================
+   GLOBAL · Katalog tasarim sistemi
+   Minimalist editoryal dil: greige + beyaz + antrasit,
+   hayalet (ghost) baslik, ince cizgi, numarali blok.
+   ============================================================ */
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --tan:#C3B4A0;          /* ana greige blok */
+  --tan-dk:#B0A08A;
+  --tan-lt:#DCD4C7;       /* acik greige */
+  --tan-pale:#EFEAE2;     /* cok acik zemin */
+  --paper:#FBFAF7;
+  --char:#3E3E3A;         /* antrasit blok */
+  --char-lt:#55554F;
+  --ink:#1A1A18;
+  --muted:#8B8478;
+  --line:#D8D1C6;
+}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:"Liberation Sans","DejaVu Sans",sans-serif;color:var(--ink);background:#8a8a8a;font-size:9.5pt;line-height:1.62}
+
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;background:var(--paper);page-break-after:always;break-after:page}
+.page:last-child{page-break-after:auto}
+.page.white{background:#fff}
+.page.tan{background:var(--tan)}
+.page.pale{background:var(--tan-pale)}
+.page.dark{background:var(--char)}
+.pad{position:absolute;inset:0;padding:20mm 18mm}
+
+/* ---------- baslik: solid + hayalet ---------- */
+.dt{line-height:.92;letter-spacing:-.035em;font-weight:700;font-size:33pt}
+.dt .g{color:var(--tan-lt)}                 /* beyaz zeminde hayalet */
+.tan .dt .g,.dark .dt .g{color:rgba(255,255,255,.42)}
+.dt .s{color:var(--ink);display:block}
+.tan .dt .s{color:#2A2A26}
+.dark .dt .s{color:#fff}
+.dt.stack .g{display:block}
+.dt.big{font-size:44pt}
+.dt.sm{font-size:26pt}
+
+.kicker{font-size:6.8pt;letter-spacing:.30em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.tan .kicker{color:#6E6355}
+.dark .kicker{color:var(--tan)}
+.sub{font-size:8pt;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--ink);margin-bottom:2mm}
+.tan .sub{color:#2A2A26}
+.dark .sub{color:#fff}
+
+h3{font-size:10.5pt;font-weight:700;letter-spacing:-.005em;margin-bottom:1mm}
+h4{font-size:8.5pt;font-weight:700;letter-spacing:.04em}
+p{font-size:8.2pt;line-height:1.72;color:#4A473F;margin-bottom:2.5mm}
+.tan p{color:#40392F}
+.dark p{color:#D2CEC5}
+p.lead{font-size:10pt;line-height:1.6;color:var(--ink)}
+.tan p.lead{color:#241F19}
+.dark p.lead{color:#F0EDE7}
+.tiny{font-size:7pt;color:var(--muted);line-height:1.6}
+
+/* ---------- cizgiler ---------- */
+.hr{height:1px;background:var(--line);width:100%;margin:5mm 0}
+.tan .hr{background:rgba(0,0,0,.16)}
+.dark .hr{background:rgba(255,255,255,.20)}
+.hr.ink{height:1.6px;background:var(--ink);width:14mm;margin:4mm 0}
+.tan .hr.ink{background:#2A2A26}
+
+/* ---------- izgara ---------- */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8mm}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:6mm}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10mm;align-items:start}
+.split-l{display:grid;grid-template-columns:1.25fr .75fr;gap:9mm;align-items:start}
+.split-r{display:grid;grid-template-columns:.75fr 1.25fr;gap:9mm;align-items:start}
+
+/* ---------- numarali satir (01 / 02 / 03) ---------- */
+.numrow{display:grid;grid-template-columns:13mm 1fr;gap:5mm;align-items:start;margin-bottom:6mm}
+.numbox{width:13mm;height:13mm;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:9pt;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.tan .numbox{border-color:rgba(0,0,0,.28);color:#5C5245}
+.dark .numbox{border-color:rgba(255,255,255,.32);color:var(--tan)}
+.numrow p{margin:1mm 0 0}
+
+/* ---------- servis kutusu (cerceveli kare) ---------- */
+.sbox{border:1px solid var(--line);padding:6mm;min-height:44mm;display:flex;flex-direction:column;justify-content:space-between}
+.tan .sbox{border-color:rgba(0,0,0,.26)}
+.sbox .no{font-size:16pt;font-weight:700;color:var(--tan-dk);line-height:1}
+.tan .sbox .no{color:rgba(255,255,255,.65)}
+.sbox p{margin:0;font-size:7.6pt}
+
+/* ---------- gorsel ---------- */
+figure{margin:0;overflow:hidden;background:var(--tan-lt)}
+figure img{width:100%;height:100%;object-fit:cover;display:block}
+.cap{font-size:6.6pt;letter-spacing:.10em;text-transform:uppercase;color:var(--muted);padding-top:2mm}
+.tan .cap{color:#6E6355}
+.ph{border:1px dashed var(--tan-dk);background:var(--tan-pale);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6mm}
+.tan .ph{background:rgba(255,255,255,.28);border-color:rgba(0,0,0,.24)}
+.ph b{font-size:7pt;letter-spacing:.20em;text-transform:uppercase;color:#7C7263;display:block;margin-bottom:1.5mm}
+.ph span{font-size:7pt;color:var(--muted);max-width:52mm;line-height:1.5}
+
+/* ---------- blok zeminler ---------- */
+.blk{background:var(--tan);padding:7mm}
+.blk-d{background:var(--char);color:#fff;padding:7mm}
+.blk-d h3,.blk-d h4{color:#fff}
+.blk-d p{color:#CFCBC2}
+.blk-w{background:#fff;padding:7mm}
+
+/* ---------- liste ---------- */
+ul.ls{list-style:none}
+ul.ls li{font-size:8pt;color:#4A473F;padding:2.2mm 0;border-bottom:1px solid var(--line)}
+ul.ls li:last-child{border-bottom:none}
+.tan ul.ls li{color:#3A342B;border-color:rgba(0,0,0,.15)}
+ul.ls li b{font-weight:700;color:var(--ink)}
+ul.dot{list-style:none}
+ul.dot li{position:relative;padding-left:4.5mm;font-size:8pt;margin-bottom:1.8mm;color:#4A473F}
+ul.dot li::before{content:"";position:absolute;left:0;top:1.9mm;width:1.6mm;height:1.6mm;background:var(--tan-dk)}
+.tan ul.dot li{color:#3A342B}
+.tan ul.dot li::before{background:#5C5245}
+
+/* ---------- tablo ---------- */
+table{width:100%;border-collapse:collapse;font-size:7.8pt}
+th{text-align:left;font-size:6.6pt;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+   padding:0 0 2mm;border-bottom:1px solid var(--ink);font-weight:700}
+td{padding:2.4mm 0;border-bottom:1px solid var(--line);vertical-align:top;color:#4A473F}
+td.k{font-weight:700;color:var(--ink);width:40%}
+.tan td{border-color:rgba(0,0,0,.15);color:#3A342B}
+.tan th{border-color:#2A2A26;color:#6E6355}
+.tan td.k{color:#241F19}
+
+/* ---------- zaman cizelgesi ---------- */
+.tl{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:4mm;margin-top:6mm}
+.tl::before{content:"";position:absolute;left:0;right:0;top:19mm;height:1px;background:var(--line)}
+.tan .tl::before{background:rgba(0,0,0,.22)}
+.tl .it{position:relative}
+.tl .yr{font-size:14pt;font-weight:700;letter-spacing:-.02em;margin-bottom:4mm;color:var(--ink)}
+.tan .tl .yr{color:#241F19}
+.tl .dot{width:5mm;height:5mm;border-radius:50%;border:1px solid var(--line);background:var(--paper);
+  display:flex;align-items:center;justify-content:center;font-size:6pt;font-weight:700;color:var(--muted);margin-bottom:4mm}
+.tan .tl .dot{background:var(--tan);border-color:rgba(0,0,0,.30);color:#5C5245}
+.tl h4{margin-bottom:1mm;font-size:8pt}
+.tl p{font-size:7.2pt;margin:0;line-height:1.55}
+
+/* ---------- dikey yazi (icindekiler) ---------- */
+.vert{writing-mode:vertical-rl;transform:rotate(180deg);font-size:8pt;letter-spacing:.34em;
+  text-transform:uppercase;font-weight:700;color:var(--muted)}
+
+/* ---------- sayfa alt bilgisi ---------- */
+.pf{position:absolute;left:18mm;right:18mm;bottom:11mm;display:flex;justify-content:space-between;
+  font-size:6.4pt;letter-spacing:.20em;text-transform:uppercase;color:var(--muted)}
+.tan .pf{color:#6E6355}
+.dark .pf{color:#8E887D}
+
+/* ---------- kapak ----------
+   Bloklar mutlak konumlu: flex hesabinda foto seridinin ezilmesini onler. */
+.cover .mark{font-size:11pt;font-weight:700;letter-spacing:.42em}
+.cover .rule{height:1px;background:var(--ink);flex:1}
+.cover .ruleline{display:flex;align-items:center;gap:5mm}
+.cover .ctitle{position:absolute;left:18mm;right:18mm;top:74mm;text-align:center}
+.cover .cstrip{position:absolute;left:18mm;right:18mm;bottom:20mm}
+.cover .cstrip .imgs{height:88mm;display:grid;gap:4mm}
+.cover .cfoot{display:flex;justify-content:space-between;margin-top:5mm;
+  font-size:7pt;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.cover .cband{display:flex;align-items:center;gap:5mm;margin:8mm 10mm 0}
+.cover .cband span{font-size:8pt;letter-spacing:.24em;text-transform:uppercase;font-weight:700;white-space:nowrap}
+.cover .cband i{height:1px;background:var(--ink);flex:1}
