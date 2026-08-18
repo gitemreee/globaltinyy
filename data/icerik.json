@@ -1,0 +1,108 @@
+{
+  "marka": {
+    "ad": "Global Yapı Geliştirme A.Ş.",
+    "kisa": "GLOBAL",
+    "alt": "YAPI GELİŞTİRME A.Ş.",
+    "telefon": "+90 546 655 70 70",
+    "telefonHam": "+905466557070",
+    "eposta": "info@globalinvestment.com.tr"
+  },
+  "rakamlar": [
+    { "sayi": "7", "etiket": "YILLIK ÜRETİM DENEYİMİ" },
+    { "sayi": "~200", "etiket": "TAMAMLANMIŞ İŞ" },
+    { "sayi": "260", "etiket": "ÜNİTE · AKMEŞE'DE SÜRÜYOR", "vurgu": true },
+    { "sayi": "3", "etiket": "ÜRETİM KOLU" }
+  ],
+  "kollar": [
+    {
+      "no": "01", "slug": "tiny-house", "ad": "Tiny House", "gorsel": "img-30",
+      "ozet": "1+0'dan 3+1'e, büyük aileler için mega boy üretime kadar. Ofis ve ticari kullanım için özel konseptler.",
+      "etiketler": ["1+0", "1+1", "2+1", "3+1", "MEGA BOY"],
+      "seo": "Tiny House Modelleri ve Fiyatları | 1+0, 1+1, 2+1, 3+1",
+      "desc": "1+0, 1+1, 2+1, 3+1 ve mega boy tiny house üretimi. Ofis ve ticari tiny house. 7 yıllık deneyim, yaklaşık 200 tamamlanmış iş.",
+      "giris": "1+0'dan büyük ailelere yönelik mega boy üretime kadar tüm tiplerde; konut, ofis ve ticari kullanım için özel konseptlerle. Proje bazlı seri üretim ve kişiye özel tek ünite üretimi birlikte yürür.",
+      "secenekler": [
+        { "kod": "1+0", "ad": "Kompakt 1+0", "gorsel": "img-30",
+          "aciklama": "Tek yaşam hacmi, açık plan. En küçük ölçüde tam donanım: mutfak, ıslak hacim ve yatak alanı eksiksiz kurulur.",
+          "liste": ["Bağ evi ve hafta sonu kullanımı", "Kiralama amaçlı yatırım ünitesi", "Glamping ve resort odası"] },
+        { "kod": "1+1", "ad": "1+1", "gorsel": "img-14",
+          "aciklama": "Ayrı yatak odası ile günlük yaşam alanının bölündüğü plan. Çift ve küçük aileler için en çok tercih edilen tip.",
+          "liste": ["Kalıcı konut kullanımı", "Turizm tesisi odası", "Misafir ünitesi"] },
+        { "kod": "2+1", "ad": "2+1", "gorsel": "img-30",
+          "aciklama": "İki yatak odası ve ortak yaşam alanı. Çocuklu aileler için depolama ve sirkülasyon buna göre planlanır.",
+          "liste": ["Aile konutu", "Uzun dönem kiralama", "Şantiye ve saha konaklaması"] },
+        { "kod": "3+1", "ad": "3+1", "gorsel": "img-14",
+          "aciklama": "Üç yatak odalı geniş plan. Taşıyıcı sistem ve gövde ölçüsü bu hacme göre yeniden hesaplanır.",
+          "liste": ["Kalabalık aile konutu", "Kalıcı yerleşim", "Personel lojmanı"] },
+        { "kod": "MEGA", "ad": "Mega Boy", "gorsel": "img-30",
+          "aciklama": "Büyük aileler için standart ölçülerin üzerinde üretilen özel gövde. Taşıma ve montaj planı projeye göre çıkarılır.",
+          "liste": ["Geniş aile konutu", "Çok odalı kalıcı yerleşim", "Özel talep gövde ölçüleri"] },
+        { "kod": "ÖZEL", "ad": "Özel Konsept", "gorsel": "img-14",
+          "aciklama": "Ölçüden malzemeye, cepheden iç plana kadar tamamen kişiye özel tasarlanan üretim. Elinizdeki çizim üzerinden de çalışırız.",
+          "liste": ["Mimari projesi hazır işler", "Özel cephe ve malzeme talebi", "Tek üretim özel gövde"] },
+        { "kod": "OFİS", "ad": "Ofis", "gorsel": "img-03",
+          "aciklama": "Çalışma düzenine göre planlanan ünite. Elektrik altyapısı, aydınlatma ve sabit mobilya birlikte kurulur.",
+          "liste": ["Satış ve tanıtım ofisi", "Şantiye saha ofisi", "Bahçe içi çalışma ünitesi"] },
+        { "kod": "TİCARİ", "ad": "Ticari", "gorsel": "img-03",
+          "aciklama": "İşletmeye hazır teslim edilen ünite. Tezgâh, ekipman yerleşimi, su ve elektrik altyapısı kurulu gelir.",
+          "liste": ["Kafe ve büfe işletmesi", "Satış noktası ve kiosk", "Etkinlik ve fuar alanı"] }
+      ],
+      "ek": { "baslik": "İçerideki her şey bizim üretimimiz", "gorsel": "img-14",
+        "metin": "Mutfak tezgâhı, dolaplar, merdiven, loft korkuluğu ve banyo dolabı dışarıdan alınmaz. Hacme göre ölçülendirilip aynı atölyede üretilir, yerinde kurulur." }
+    },
+    {
+      "no": "02", "slug": "mobilya", "ad": "Mobilya", "gorsel": "img-22",
+      "ozet": "Ev mutfağı, yatak odası ve banyo mobilyası; ofis sabit mobilyaları; proje bazlı otel işleri.",
+      "etiketler": ["MUTFAK", "YATAK ODASI", "BANYO", "DUVAR KAPLAMA"],
+      "seo": "Ölçüye Özel Mobilya | Mutfak, Yatak Odası, Ofis ve Otel Mobilyası",
+      "desc": "Ölçüye özel mutfak, yatak odası, banyo ve ofis sabit mobilyaları. Duvar kaplama ve proje bazlı otel mobilyası üretimi.",
+      "giris": "Ölçüye özel üretim. Ev mutfağından otel odası takımına, ofis sabit mobilyalarından duvar kaplamalarına kadar tasarım, üretim ve montaj tek elden yürür.",
+      "secenekler": [
+        { "kod": "EV", "ad": "Ev Mobilyası", "gorsel": "img-22",
+          "aciklama": "Mutfak, yatak odası ve banyo mobilyalarında ölçüye özel üretim. Hazır mobilyanın bıraktığı boşluklar kalmaz; dolap tavana kadar çıkar, tezgâh duvara tam oturur.",
+          "liste": ["Mutfak dolabı, tezgâh ve ada uygulamaları", "Yatak odası takımı ve gardırop", "Banyo dolabı ve tezgâh", "Ölçüye özel depolama çözümleri"] },
+        { "kod": "OFİS", "ad": "Ofis Sabit Mobilya", "gorsel": "img-24",
+          "aciklama": "Ofise sabitlenen, mekânla birlikte tasarlanan mobilyalar. Önce alanın nasıl kullanıldığı çözülür, mobilya bu cevabın sonucudur.",
+          "liste": ["Sabit çalışma masaları ve tezgâhlar", "Toplantı ve karşılama alanı", "Dolap ve arşiv sistemleri", "Bölücü ve panel uygulamaları"] },
+        { "kod": "DUVAR", "ad": "Duvar Kaplama", "gorsel": "img-24",
+          "aciklama": "Antre, mutfak ve salonda duvarı bir yüzey olarak ele alan kaplama mobilyaları. Depolama, aydınlatma ve kaplama tek bütün olarak kurulur.",
+          "liste": ["Antre kaplama ve vestiyer", "Salon duvar ünitesi ve TV paneli", "Mutfak duvar kaplaması", "Gizli depolamalı panel sistemleri"] },
+        { "kod": "PROJE", "ad": "Proje / Otel", "gorsel": "img-22",
+          "aciklama": "Otel ve inşaat projelerinde tüm mobilya işleri. Oda tipi başına standart takım belirlenir ve seri üretime alınır; böylece parça değişimi ve yenileme kolaylaşır.",
+          "liste": ["Otel odası: mutfak, yatak odası, banyo", "Lobi, resepsiyon ve restoran mobilyası", "İnşaat projelerinde toplu mobilya işleri", "Etaplı teslim ve montaj planı"] }
+      ]
+    },
+    {
+      "no": "03", "slug": "karavan", "ad": "Karavan", "gorsel": "img-32",
+      "ozet": "Karayolları şartnamesine uygun ticari karavan çeşitleri ve özel üretim yaşam karavanları.",
+      "etiketler": ["TİCARİ", "YAŞAM", "ÖZEL ÇÖZÜM"],
+      "seo": "Ticari ve Yaşam Karavanı Üretimi | Karayolları Şartnamesine Uygun",
+      "desc": "Karayolları şartnamesine uygun ticari karavan çeşitleri ve özel üretim yaşam karavanları. Şasi, izolasyon, mutfak ve ıslak hacim çözümleriyle.",
+      "giris": "Karayolları şartnamesine uygun ticari karavan çeşitleri ve özel üretim yaşam karavanları. Şasi seçiminden iç yerleşime kadar hareket halindeki yük hesaba katılır.",
+      "secenekler": [
+        { "kod": "TİCARİ", "ad": "Ticari Karavan", "gorsel": "img-03",
+          "aciklama": "Karayolları şartnamesine uygun üretilen, işletmeye hazır ticari üniteler. Tezgâh, ekipman yerleşimi ve altyapı kurulu halde teslim edilir.",
+          "liste": ["Şartnameye uygun şasi ve gövde", "Satış tezgâhı ve ekipman yerleşimi", "Elektrik panosu ve priz hattı", "Temiz ve atık su bağlantısı", "Markaya göre cephe giydirme"] },
+        { "kod": "YAŞAM", "ad": "Yaşam Karavanı", "gorsel": "img-32",
+          "aciklama": "Özel üretim yaşam karavanları. Yolda dayanacak, durduğunda ev gibi olacak şekilde; ağırlık dağılımı ve bağlantı detayları buna göre çözülür.",
+          "liste": ["Şasi üzerine çelik iskelet, izolasyonlu gövde", "Mutfak ünitesi, evye ve tezgâh altı depolama", "Islak hacim, temiz ve atık su deposu", "12V / 220V elektrik altyapısı", "Yatak platformu ve kaldırılabilir depolama"] },
+        { "kod": "ÖZEL", "ad": "Özel Çözüm", "gorsel": "img-32",
+          "aciklama": "Standart dışı kullanım senaryoları için projeye özel karavan üretimi. Elinizdeki fikir ya da çizim üzerinden üretilebilirlik değerlendirmesiyle başlıyoruz.",
+          "liste": ["Projeye özel gövde ölçüsü", "Özel ekipman ve donanım entegrasyonu", "Mobil hizmet ve tanıtım üniteleri", "Üretilebilirlik değerlendirmesi ve revizyon"] }
+      ],
+      "not": { "baslik": "Karayolları şartnamesi",
+        "metin": "Ticari karavanlarımız Karayolları şartnamesine uygun üretilir. Tescil, ölçü ve ağırlık sınırları yürürlükteki mevzuata tabidir; proje başlangıcında hedef kullanım şeklini birlikte değerlendirip uygun şasi ve ölçüyü belirliyoruz." }
+    }
+  ],
+  "surec": [
+    { "no": "01", "ad": "Görüşme", "metin": "Kullanım amacı, kişi sayısı, kurulum yeri ve bütçe." },
+    { "no": "02", "ad": "Tasarım", "metin": "Plan çizimi, malzeme ve donanım seçimi." },
+    { "no": "03", "ad": "Sözleşme", "metin": "Kapsam, fiyat, ödeme planı ve teslim takvimi yazılı." },
+    { "no": "04", "ad": "Üretim", "metin": "Atölyede imalat, fotoğraflı ilerleme ve kalite kontrol." },
+    { "no": "05", "ad": "Teslim", "metin": "Nakliye, yerinde montaj ve çalışır halde teslim." }
+  ],
+  "akmese": {
+    "baslik": "Köyüm Akmeşe'de 260 tiny house",
+    "metin": "Toplam 260 ünitelik üretimin sürdüğü projede aktif olarak imalat yapıyoruz. Seri üretim disiplinini kişiye özel işlerimizle aynı atölyede yürütüyoruz."
+  }
+}

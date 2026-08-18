@@ -1,7 +1,6 @@
 import fs from 'node:fs';import path from 'node:path';
 const root=process.cwd();
 export const site=JSON.parse(fs.readFileSync(path.join(root,'data/site.json'),'utf8'));
-export const pages=JSON.parse(fs.readFileSync(path.join(root,'data/pages.json'),'utf8'));
 // Hedef platform: DEPLOY_TARGET ile secilir. Netlify build ortaminda NETLIFY=true otomatik gelir.
 export const target=(process.env.DEPLOY_TARGET||(process.env.NETLIFY?'netlify':'pages')).toLowerCase();
 const t=site.targets[target];
