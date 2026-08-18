@@ -8,115 +8,158 @@ const D = JSON.parse(fs.readFileSync(path.join(root, 'data/icerik.json'), 'utf8'
 const AMBLEM = fs.readFileSync(path.join(root, 'src/amblem.svg'), 'utf8').trim();
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const img = (ad) => `${B}images/${ad}.webp`;
-
-// Netlify hedefinde form Netlify Forms'a düşer; Pages'te arayüz demo kalır.
 const netlifyForm = target === 'netlify';
 
-const marka = (koyu = false) => `<a class="marka" href="${B}" aria-label="${esc(D.marka.ad)} ana sayfa">
-  ${AMBLEM}<span><b style="color:${koyu ? '#F5F3F0' : 'inherit'}">${D.marka.kisa}</b>
-  <span>${D.marka.alt}</span></span></a>`;
+/* ---------- simgeler (ince çizgi) ---------- */
+const S = (d, o = 22, ek = '') => `<svg width="${o}" height="${o}" viewBox="0 0 24 24" fill="none" ` +
+  `stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" ${ek} aria-hidden="true">${d}</svg>`;
+const IK = {
+  atolye: S('<path d="M3 21V9l5 3V9l5 3V9l5 3v9z"/><path d="M3 21h18"/><path d="M7 21v-4h3v4"/>'),
+  anahtar: S('<path d="M14.5 6.5a4.5 4.5 0 1 0-4.2 6.2L4 19v2h3l1-1h2v-2h2v-2l2.2-2.2a4.5 4.5 0 0 0 .3-7.3z"/><circle cx="16.5" cy="7.5" r="1"/>'),
+  kisi: S('<circle cx="12" cy="8" r="3.4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>'),
+  saat: S('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', 20),
+  onay: S('<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8"/>', 20),
+  ev: S('<path d="M4 10.5 12 4l8 6.5V20H4z"/><path d="M9.5 20v-5h5v5"/>', 20),
+  katman: S('<path d="M12 3.5 3.5 8 12 12.5 20.5 8z"/><path d="M3.5 12 12 16.5 20.5 12"/><path d="M3.5 16 12 20.5 20.5 16"/>', 20),
+  tel: S('<path d="M4.5 5.2c0-.7.6-1.2 1.2-1.2h2.6l1.6 4-2 1.3a12.5 12.5 0 0 0 5.3 5.3l1.3-2 4 1.6v2.6c0 .7-.5 1.2-1.2 1.2A16.5 16.5 0 0 1 4.5 5.2z"/>'),
+  posta: S('<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3.6 7 12 13l8.4-6"/>'),
+  wa: S('<path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.2 20.8l4.4-1.2A8.8 8.8 0 1 0 12 3.2z"/><path d="M9 9.4c.2 2.2 2.4 4.4 4.6 4.6l1-1.2 1.7.8-.3 1.3c-2.9.5-6.4-3-5.9-5.9l1.3-.3.8 1.7z"/>'),
+  kalem: S('<path d="M4 20h4L20 8a2.5 2.5 0 0 0-3.5-3.5L4.5 16.5z"/>', 20),
+  kutu: S('<path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5 3.5 16.5z"/><path d="M3.5 7.5 12 11.7l8.5-4.2M12 11.7v8.8"/>', 20),
+  kalkan: S('<path d="M12 3.2 19.5 6v5.4c0 4.3-3.1 8-7.5 9.4-4.4-1.4-7.5-5.1-7.5-9.4V6z"/><path d="M9 12l2 2 4-4"/>'),
+  yildiz: S('<path d="M12 3.8 14.3 9l5.7.5-4.3 3.8 1.3 5.6L12 15.9 7 18.9l1.3-5.6L4 9.5 9.7 9z"/>', 18),
+};
+const TIK = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B87333" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l4.5 4.5 10-10"/></svg>`;
+const OKS = (yon) => `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${yon === 'sol' ? 'M14.5 5 8 12l6.5 7' : 'M9.5 5 16 12l-6.5 7'}"/></svg>`;
+
+/* ---------- parçalar ---------- */
+const markaKilidi = () => `<a class="marka" href="${B}" aria-label="${esc(D.marka.ad)} — ana sayfa">
+  ${AMBLEM}<span><b>${D.marka.kisa}</b><i>${D.marka.alt}</i></span></a>`;
 
 function ustBar(aktif) {
-  const bag = (slug, ad) =>
-    `<a href="${B}${slug}/"${aktif === slug ? ' aria-current="page"' : ''}>${ad}</a>`;
-  const menu = D.kollar.map((k) => bag(k.slug, k.ad.toUpperCase())).join('');
+  const bag = (slug, ad) => `<a href="${B}${slug}/"${aktif === slug ? ' aria-current="page"' : ''}>${ad}</a>`;
   return `<header class="ust">
-  ${marka()}
-  <nav class="menu" aria-label="Ana menü">${menu}<a href="${B}#iletisim">İLETİŞİM</a></nav>
-  <div class="ust-sag">
-    <a class="tel" href="tel:${D.marka.telefonHam}">${D.marka.telefon}</a>
-    <a class="btn" href="${B}#teklif">TEKLİF AL</a>
-    <button class="hamburger" id="mnu" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobil">
-      <span></span><span></span><span></span></button>
+  <div class="ust-ic">
+    ${markaKilidi()}
+    <nav class="nav" id="nav" aria-label="Ana menü">
+      <a href="${B}"${aktif === '' ? ' aria-current="page"' : ''}>Ana Sayfa</a>
+      ${D.kollar.map((k) => bag(k.slug, k.ad)).join('')}
+      <a href="${B}#surec">Süreç</a>
+      <a href="${B}#iletisim">İletişim</a>
+    </nav>
+    <div class="ust-sag">
+      <a class="tel" href="tel:${D.marka.telefonHam}">${D.marka.telefon}</a>
+      <a class="dg koyu" href="${B}#teklif">Teklif Al</a>
+      <button class="ham" id="mnu" aria-expanded="false" aria-controls="nav">Menü</button>
+    </div>
   </div>
-</header>
-<nav class="mobil-menu" id="mobil" aria-label="Mobil menü">
-  ${D.kollar.map((k) => `<a href="${B}${k.slug}/">${k.ad.toUpperCase()}</a>`).join('')}
-  <a href="${B}#iletisim">İLETİŞİM</a>
-  <a href="tel:${D.marka.telefonHam}">${D.marka.telefon}</a>
-</nav>`;
+</header>`;
 }
 
-const tik = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B87333" stroke-width="2" aria-hidden="true"><path d="M4 12l6 6L20 6"/></svg>`;
+const gorselKart = (gorsel, alt, baslik, satir, { cip, sim, uzun, bag } = {}) => {
+  const et = bag ? 'a' : 'div';
+  return `<${et} class="gk${uzun ? ' uzun' : ''}"${bag ? ` href="${bag}"` : ''}>
+    <img src="${img(gorsel)}" alt="${esc(alt)}" loading="lazy">
+    ${sim ? `<span class="sim" style="color:#fff">${sim}</span>` : ''}
+    ${cip ? `<span class="cip">${esc(cip)}</span>` : ''}
+    <div class="alt"><h3>${esc(baslik)}</h3>
+      <div class="satir">${satir}</div></div>
+  </${et}>`;
+};
 
-function secici(secenekler, ters = false) {
-  const dugme = secenekler.map((s, i) =>
-    `<button role="tab" id="sk${i}" aria-controls="sp${i}" aria-selected="${i === 0}" data-hedef="sp${i}">${esc(s.kod)}</button>`).join('');
-  const panel = secenekler.map((s, i) => `
-    <div class="detay${ters ? ' ters' : ''}" id="sp${i}" role="tabpanel" aria-labelledby="sk${i}"${i ? ' hidden' : ''}>
-      ${ters ? '' : `<div class="detay-gorsel"><img src="${img(s.gorsel)}" alt="${esc(s.ad)} uygulaması" loading="lazy"></div>`}
-      <div class="detay-yazi">
-        <div class="mono" style="font-size:12px;color:var(--bronz);letter-spacing:.1em">${esc(s.kod)}</div>
-        <h2>${esc(s.ad)}</h2>
-        <p>${esc(s.aciklama)}</p>
-        <div class="ayrac"></div>
-        <div style="font-size:11px;letter-spacing:.2em;color:var(--gri);margin-bottom:14px">KAPSAM</div>
-        <ul class="kontrol">${s.liste.map((l) => `<li>${tik}<span>${esc(l)}</span></li>`).join('')}</ul>
-        <div style="flex-grow:1"></div>
-        <a class="btn" style="margin-top:28px" href="${B}#teklif">BU SEÇENEK İÇİN TEKLİF AL</a>
-      </div>
-      ${ters ? `<div class="detay-gorsel"><img src="${img(s.gorsel)}" alt="${esc(s.ad)} uygulaması" loading="lazy"></div>` : ''}
-    </div>`).join('');
-  return `<div class="secici" role="tablist" aria-label="Seçenekler">${dugme}</div>${panel}`;
-}
+const surecBandi = () => `<section class="bolum" id="surec">
+  <div class="ic panel">
+    <div class="bas">
+      <div><span class="etiket">${IK.kalem}Nasıl çalışıyoruz</span>
+        <h2 class="b2" style="margin-top:12px">Beş adımda anahtar teslim</h2></div>
+      <p>İlk görüşmeden yerinde montaja kadar tek muhatap; her adımda ne olacağını önceden biliyorsunuz.</p>
+    </div>
+    <div class="adimlar">${D.surec.map((s) => `<div class="adim">
+      <span class="no">${s.no}</span><h3>${esc(s.ad)}</h3><p>${esc(s.metin)}</p></div>`).join('')}</div>
+  </div>
+</section>`;
 
 function iletisim() {
   const alanlar = D.kollar.map((k) => `<option>${esc(k.ad)}</option>`).join('');
-  const formAcik = netlifyForm
-    ? `<form class="form" name="teklif" method="POST" action="${B}tesekkurler/" data-netlify="true" netlify-honeypot="bot-field">
+  const ac = netlifyForm
+    ? `<form name="teklif" method="POST" action="${B}tesekkurler/" data-netlify="true" netlify-honeypot="bot-field">
        <input type="hidden" name="form-name" value="teklif">
-       <p class="hp"><label>Bu alanı boş bırakın <input name="bot-field"></label></p>`
-    : `<form class="form" onsubmit="event.preventDefault();alert('Form arayüzü hazır.')">`;
-  return `<section class="iletisim" id="iletisim">
-  <div>
-    <div class="eyebrow">SİPARİŞ HATTI</div>
-    <h2 id="teklif">Projenizi anlatın,<br>ölçüsünü birlikte alalım</h2>
-    <p style="font-size:14.5px;line-height:1.8;color:var(--metin);margin-top:20px;max-width:420px">
-      Tiny house, mobilya ya da karavan — ihtiyacınızı yazın, size uygun çözümü ve gerçekçi bir takvimi çıkaralım.</p>
-    <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px">
-      <a class="satir" href="tel:${D.marka.telefonHam}">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B87333" stroke-width="1.6" aria-hidden="true"><path d="M4 5c0-.6.4-1 1-1h3l2 5-2.5 1.5a12 12 0 0 0 5 5L14 13l5 2v3c0 .6-.4 1-1 1A15 15 0 0 1 4 5z"/></svg>
-        <span class="mono" style="font-size:18px;color:var(--ink)">${D.marka.telefon}</span></a>
-      <a class="satir" href="mailto:${D.marka.eposta}">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B87333" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><path d="M3 6l9 7 9-7"/></svg>
-        <span style="color:var(--ink)">${D.marka.eposta}</span></a>
-      <a class="satir" href="https://wa.me/${D.marka.telefonHam.replace('+', '')}" rel="noopener">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B87333" stroke-width="1.6" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/></svg>
-        <span style="color:var(--ink)">WhatsApp'tan yazın</span></a>
+       <p class="gizli"><label>Bu alanı boş bırakın <input name="bot-field"></label></p>`
+    : `<form onsubmit="event.preventDefault();alert('Form arayüzü hazır.')">`;
+  return `<section class="bolum son" id="iletisim">
+  <div class="ic panel">
+    <div class="iletisim">
+      <div>
+        <span class="etiket">${IK.tel}Sipariş hattı</span>
+        <h2 class="b1" style="margin:14px 0 12px">Projenizi anlatın,<br>ölçüsünü birlikte alalım</h2>
+        <p class="lead">Tiny house, mobilya ya da karavan — ihtiyacınızı yazın; uygun çözümü ve
+          gerçekçi bir teslim takvimini birlikte çıkaralım.</p>
+        <div class="kanal">
+          <a href="tel:${D.marka.telefonHam}"><span class="sim">${IK.tel}</span>
+            <span><small>Telefon</small><b>${D.marka.telefon}</b></span></a>
+          <a href="mailto:${D.marka.eposta}"><span class="sim">${IK.posta}</span>
+            <span><small>E-posta</small><b>${D.marka.eposta}</b></span></a>
+          <a href="https://wa.me/${D.marka.telefonHam.replace('+', '')}" rel="noopener"><span class="sim">${IK.wa}</span>
+            <span><small>WhatsApp</small><b>Hemen mesaj gönderin</b></span></a>
+        </div>
+      </div>
+      <div class="panel beyaz" id="teklif">
+        <h3 class="b3">Teklif formu</h3>
+        <p style="font-size:.875rem;margin-top:6px">Formu bırakın, aynı gün dönüş yapalım.</p>
+        ${ac}
+          <label>Ad soyad<input name="ad" required autocomplete="name" placeholder="Adınız ve soyadınız"></label>
+          <label>Telefon<input name="telefon" type="tel" required autocomplete="tel" placeholder="05xx xxx xx xx"></label>
+          <label>İlgilendiğiniz alan<select name="alan">${alanlar}</select></label>
+          <label>Mesaj<textarea name="mesaj" placeholder="Ölçü, kullanım amacı, kurulum yeri…"></textarea></label>
+          <button class="dg koyu" type="submit" style="width:100%;padding:15px">Teklif talebi gönder</button>
+        </form>
+      </div>
     </div>
   </div>
-  ${formAcik}
-    <div><label for="ad">AD SOYAD</label><input id="ad" name="ad" required autocomplete="name"></div>
-    <div><label for="tel">TELEFON</label><input id="tel" name="telefon" type="tel" required autocomplete="tel"></div>
-    <div><label for="alan">İLGİLENDİĞİNİZ ALAN</label><select id="alan" name="alan">${alanlar}</select></div>
-    <div><label for="msj">MESAJ</label><textarea id="msj" name="mesaj"></textarea></div>
-    <button class="btn" type="submit" style="margin-top:4px">TEKLİF TALEBİ GÖNDER</button>
-  </form>
 </section>`;
 }
 
 const altBilgi = () => `<footer class="alt">
-  <div>
-    <b>${D.marka.kisa}</b><small>${D.marka.alt}</small>
-    <p>Tiny house · Modüler yapı · Mobilya · Karavan<br>
-      <a href="tel:${D.marka.telefonHam}">${D.marka.telefon}</a> · ${D.marka.eposta}</p>
+  <div class="alt-ic">
+    <div class="alt-ust">
+      <div>
+        <span style="display:inline-block">${AMBLEM.replace(/#2F3336/g, '#FFFFFF').replace('<svg', '<svg class="amb"')}</span>
+        <p>${esc(D.marka.ad)} — tiny house, modüler yapı, ölçüye özel mobilya ve
+           karavan üretimi. Tasarımdan montaja tek muhatap.</p>
+      </div>
+      <div><h4>Üretim kolları</h4>
+        ${D.kollar.map((k) => `<a href="${B}${k.slug}/">${esc(k.ad)}</a>`).join('')}</div>
+      <div><h4>İletişim</h4>
+        <a href="tel:${D.marka.telefonHam}">${D.marka.telefon}</a>
+        <a href="mailto:${D.marka.eposta}">${D.marka.eposta}</a>
+        <a href="${B}#teklif">Teklif al</a></div>
+    </div>
+    <div class="alt-son">
+      <span>© ${new Date().getFullYear()} ${esc(D.marka.ad)}</span>
+      <span>globalyapicelik.net</span>
+    </div>
   </div>
-  <div class="telif">© ${new Date().getFullYear()} ${D.marka.ad.toUpperCase()}</div>
 </footer>`;
 
-const JS = `<script>
+const JS_ = `<script>
 (function(){
-  var m=document.getElementById('mnu'),n=document.getElementById('mobil');
-  if(m&&n)m.addEventListener('click',function(){
-    var a=n.classList.toggle('acik');m.setAttribute('aria-expanded',a);
-    m.setAttribute('aria-label',a?'Menüyü kapat':'Menüyü aç');});
+  var m=document.getElementById('mnu'),n=document.getElementById('nav');
+  function dar(){return window.matchMedia('(max-width:1080px)').matches}
+  function kur(){if(n)n.hidden=dar()&&m.getAttribute('aria-expanded')!=='true'}
+  if(m&&n){m.addEventListener('click',function(){
+    m.setAttribute('aria-expanded',m.getAttribute('aria-expanded')!=='true');kur();});
+   window.addEventListener('resize',kur);kur();}
+  document.querySelectorAll('[data-ray]').forEach(function(g){
+    var r=document.getElementById(g.dataset.ray);if(!r)return;
+    g.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click',function(){
+        r.scrollBy({left:(b.dataset.yon==='sol'?-1:1)*(r.clientWidth*0.8),behavior:'smooth'});});});
+  });
   document.querySelectorAll('[role=tablist]').forEach(function(t){
     var d=[].slice.call(t.querySelectorAll('[data-hedef]'));
     d.forEach(function(b){b.addEventListener('click',function(){
-      d.forEach(function(o){
-        o.setAttribute('aria-selected',o===b);
-        var p=document.getElementById(o.dataset.hedef);
-        if(p)p.hidden=(o!==b);});});});});
+      d.forEach(function(o){o.setAttribute('aria-selected',o===b);
+        var p=document.getElementById(o.dataset.hedef);if(p)p.hidden=(o!==b);});});});});
 })();
 </script>`;
 
@@ -142,7 +185,7 @@ function belge({ baslik, desc, slug, govde, aktif, sema }) {
 <link rel="icon" href="${B}amblem.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Questrial&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Questrial&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="${B}styles.css">
 <script type="application/ld+json">${JSON.stringify(sema)}</script>
 </head>
@@ -150,7 +193,7 @@ function belge({ baslik, desc, slug, govde, aktif, sema }) {
 ${ustBar(aktif)}
 <main>${govde}</main>
 ${altBilgi()}
-${JS}
+${JS_}
 </body>
 </html>`;
 }
@@ -165,58 +208,112 @@ const kurulus = {
 
 // ───────────────────────────────────────────── ana sayfa
 function anaSayfa() {
-  const rakam = D.rakamlar.map((r) =>
-    `<div><b${r.vurgu ? ' class="vurgu"' : ''}>${esc(r.sayi)}</b><span>${esc(r.etiket)}</span></div>`).join('');
-  const kart = D.kollar.map((k) => `<article class="kart">
-      <img src="${img(k.gorsel)}" alt="${esc(k.ad)} üretimi" loading="lazy" width="720" height="480">
-      <div class="kart-ic">
-        <div class="mono" style="font-size:11px;color:var(--bronz);letter-spacing:.1em">${k.no}</div>
-        <h3>${esc(k.ad)}</h3><p>${esc(k.ozet)}</p>
-        <ul class="etiketler">${k.etiketler.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>
-        <a class="devam" href="${B}${k.slug}/">İNCELE →</a>
-      </div></article>`).join('');
-  const surec = D.surec.map((s) =>
-    `<div><div class="mono" style="font-size:12px;color:${s.no === '01' ? 'var(--bronz)' : 'var(--gri)'}">${s.no}</div>
-     <h3>${esc(s.ad)}</h3><p>${esc(s.metin)}</p></div>`).join('');
+  const rkSim = [IK.saat, IK.onay, IK.ev, IK.katman];
+  const rakamlar = D.rakamlar.map((r, i) => `<div class="rk">
+    <span class="sim">${rkSim[i]}</span><b${r.vurgu ? ' style="color:var(--bronz)"' : ''}>${esc(r.sayi)}</b>
+    <span>${esc(r.etiket.replace(' · ', '<br>'))}</span></div>`)
+    .join('').replace(/&lt;br&gt;/g, '<br>');
 
-  const govde = `<section class="hero">
-  <img src="${img('img-16')}" alt="Global Yapı Geliştirme tiny house üretimi" width="1440" height="900" fetchpriority="high">
-  <div class="hero-ic">
-    <div class="rozet"><i></i><span class="eyebrow">KÖYÜM AKMEŞE · 260 ÜNİTELİK ÜRETİM SÜRÜYOR</span></div>
-    <h1>Tiny house, mobilya ve karavanda tek üretim çatısı</h1>
-    <p>Yedi yıllık üretim deneyimi ve yaklaşık 200 tamamlanmış iş. Proje bazlı seri üretim de,
-       kişiye özel tek ünite de aynı atölyeden çıkar.</p>
-    <div class="aksiyon"><a class="btn" href="#teklif">TEKLİF AL</a>
-      <a class="btn ters" href="${B}tiny-house/">MODELLERİ İNCELE</a></div>
-  </div></section>
+  const ozellikler = [
+    [IK.atolye, 'Kendi atölyemiz', 'Fason değil, kontrollü üretim. Çelik konstrüksiyon, ahşap işçiliği ve mobilya aynı çatı altında.'],
+    [IK.anahtar, 'Anahtar teslim', 'Elektrik, tesisat, iç mekân ve mobilya dahil; çalışır halde teslim ediyoruz.'],
+    [IK.kisi, 'Tek muhatap', 'Tasarımdan montaja kadar tek sorumluluk. Tedarikçiler arası gecikme yok.'],
+  ].map(([s, b, m]) => `<div class="oz"><span class="sim">${s}</span>
+      <div><h3>${b}</h3><p>${m}</p></div></div>`).join('');
 
-<div class="rakamlar">${rakam}</div>
+  const kolKartlari = D.kollar.map((k) => gorselKart(
+    k.gorsel, `${k.ad} üretimi`, k.ad,
+    k.etiketler.slice(0, 3).map((e) => `<b>${esc(e)}</b>`).join('<span>·</span>'),
+    { uzun: true, bag: `${B}${k.slug}/`, cip: `Kol ${k.no}` })).join('');
+
+  const th = D.kollar[0];
+  const tipler = th.secenekler.map((s) => gorselKart(
+    s.gorsel, `${s.ad} tiny house`, s.ad,
+    `<span>${esc(s.liste[0])}</span>`,
+    { cip: s.kod, bag: `${B}tiny-house/` })).join('');
+
+  const govde = `
+<section class="bolum">
+  <div class="ic hero">
+    <img src="${img('img-16')}" alt="Ahşap cepheli tiny house, doğa içinde" fetchpriority="high" width="1536" height="1023">
+    <span class="hero-rozet"><i></i>Köyüm Akmeşe’de 260 ünitelik üretim sürüyor</span>
+    <div class="hero-yazi">
+      <h1>GLOBAL<sup>YAPI</sup></h1>
+      <p>Tiny house, ölçüye özel mobilya ve karavan üretimi. Fabrikada üretilen, sahada kurulan
+         yapılar — şasiden mutfağa kadar her şey kendi atölyemizden çıkar.</p>
+      <div class="dgler">
+        <a class="dg bronz" href="#teklif">Teklif Al</a>
+        <a class="dg cam" href="${B}tiny-house/">Modelleri Keşfet</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="bolum">
-  <div class="bolum-bas">
-    <div><div class="eyebrow">NE ÜRETİYORUZ</div><h2>Üç kol, tek atölye</h2></div>
-    <p>Şasiden mutfağa, konstrüksiyondan dolap kapağına kadar üretim kendi tesisimizde yapılır.</p>
-  </div>
-  <div class="kartlar">${kart}</div>
-</section>
-
-<section class="bant">
-  <img src="${img('img-35')}" alt="Üretim tesisi" loading="lazy">
-  <div class="bant-ic">
-    <div class="rozet"><i></i><span class="eyebrow">DEVAM EDEN PROJE</span></div>
-    <h2>${esc(D.akmese.baslik)}</h2><p>${esc(D.akmese.metin)}</p>
-    <div class="bant-say">
-      <div><b style="color:var(--bronz)">260</b><span>TOPLAM ÜNİTE</span></div>
-      <div><b style="color:var(--kagit)">Aktif</b><span>ÜRETİM DURUMU</span></div>
+  <div class="ic neden">
+    <div>
+      <h2 class="b1">Yedi yıldır, yaklaşık 200 iş.<br>Hepsi kendi atölyemizden.</h2>
+      <p style="margin-top:16px">Bir tiny house’un şasisi de, içindeki mutfağı da, cephesindeki ahşap da
+        aynı ekipten çıkıyor. Bunun somut faydası kontrol: tasarımdan montaja kadar süreç tek elde
+        olduğu için ölçü hatası ve “kimin işi” tartışması ortadan kalkıyor.</p>
+      <div class="dgler" style="margin-top:22px">
+        <a class="dg koyu" href="${B}tiny-house/">Üretimi inceleyin</a>
+        <a class="dg acik" href="tel:${D.marka.telefonHam}">${IK.tel}${D.marka.telefon}</a>
+      </div>
+      <div class="rakamlar">${rakamlar}</div>
     </div>
-  </div></section>
-
-<section class="bolum beyaz">
-  <div class="eyebrow">NASIL ÇALIŞIYORUZ</div>
-  <h2 style="font-size:clamp(26px,3.4vw,38px);margin:12px 0 40px">İhtiyaçtan anahtar teslime</h2>
-  <div class="surec">${surec}</div>
+    <div class="ozellik">${ozellikler}</div>
+  </div>
 </section>
 
+<section class="bolum">
+  <div class="ic panel">
+    <div class="bas">
+      <div><span class="etiket">${IK.kutu}Üretim kolları</span>
+        <h2 class="b2" style="margin-top:12px">Üç kol, tek atölye</h2></div>
+      <p>Modüler yapıdan ölçüye özel mobilyaya, ticari karavandan yaşam karavanına;
+         üçü de aynı ölçü diliyle üretiliyor.</p>
+    </div>
+    <div class="kartlar uc">${kolKartlari}</div>
+  </div>
+</section>
+
+<section class="bolum">
+  <div class="ic panel beyaz">
+    <div class="bas">
+      <div><span class="etiket">${IK.ev}Tiny house tipleri</span>
+        <h2 class="b2" style="margin-top:12px">1+0’dan mega boya</h2></div>
+      <p>Konut, ofis ve ticari kullanım için sekiz tip. Hepsi ölçüye göre yeniden planlanabiliyor.</p>
+    </div>
+    <div class="ray" id="ray1">${tipler}</div>
+    <div class="serit-ust">
+      <a class="dg acik" href="${B}tiny-house/">Tüm tipleri gör</a>
+      <div class="ok" data-ray="ray1">
+        <button data-yon="sol" aria-label="Geri kaydır">${OKS('sol')}</button>
+        <button data-yon="sag" aria-label="İleri kaydır">${OKS('sag')}</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bolum">
+  <div class="ic kartlar uc">
+    <div class="dk koyu">
+      <div>
+        <span class="etiket" style="background:rgba(255,255,255,.12);color:#E4C79E">${IK.kalkan}Devam eden proje</span>
+        <h2 class="b2" style="margin:14px 0 0;color:#fff">${esc(D.akmese.baslik)}</h2>
+        <p>${esc(D.akmese.metin)}</p>
+      </div>
+      <a class="dg bronz" href="${B}tiny-house/">Tiny house üretimi</a>
+    </div>
+    ${gorselKart('img-35', 'Üretim tesisinde tamamlanma aşamasındaki ünite', 'Üretim tesisi',
+      '<span>Tamamlanma aşamasındaki ünite</span>', { uzun: true, sim: IK.atolye })}
+    ${gorselKart('img-31', 'Nakliyeye hazır tiny house', 'Nakliye ve montaj',
+      '<span>Yerinde kurulum, çalışır halde teslim</span>', { uzun: true, sim: IK.kutu })}
+  </div>
+</section>
+
+${surecBandi()}
 ${iletisim()}`;
 
   return belge({
@@ -228,36 +325,79 @@ ${iletisim()}`;
 }
 
 // ───────────────────────────────────────────── kol sayfası
-function kolSayfasi(k, i) {
-  const ek = k.ek ? `<section class="bolum" style="padding-top:0">
-    <div class="detay ters" style="background:var(--beyaz);border:1px solid var(--cizgi)">
-      <div style="padding:44px 38px">
-        <div class="eyebrow">İÇ MEKÂN</div>
-        <h2 style="font-size:clamp(23px,2.6vw,32px);margin-top:14px">${esc(k.ek.baslik)}</h2>
-        <p style="font-size:14px;line-height:1.85;color:var(--metin);margin-top:18px">${esc(k.ek.metin)}</p>
+function kolSayfasi(k) {
+  const dugme = k.secenekler.map((s, i) =>
+    `<button role="tab" id="sk${i}" aria-controls="sp${i}" aria-selected="${i === 0}" data-hedef="sp${i}">${esc(s.ad)}</button>`).join('');
+  const panel = k.secenekler.map((s, i) => `
+    <div class="detay" id="sp${i}" role="tabpanel" aria-labelledby="sk${i}"${i ? ' hidden' : ''}>
+      <div class="gorsel"><img src="${img(s.gorsel)}" alt="${esc(s.ad)} uygulaması" loading="lazy"></div>
+      <div>
+        <span class="etiket">${esc(s.kod)}</span>
+        <h2 class="b2" style="margin:12px 0 10px">${esc(s.ad)}</h2>
+        <p>${esc(s.aciklama)}</p>
+        <ul class="liste">${s.liste.map((l) => `<li>${TIK}<span>${esc(l)}</span></li>`).join('')}</ul>
+        <div class="dgler" style="margin-top:24px">
+          <a class="dg koyu" href="${B}#teklif">Bu seçenek için teklif al</a>
+          <a class="dg acik" href="tel:${D.marka.telefonHam}">${IK.tel}Ara</a>
+        </div>
       </div>
-      <img src="${img(k.ek.gorsel)}" alt="${esc(k.ek.baslik)}" loading="lazy" style="width:100%;height:100%;min-height:300px;object-fit:cover">
-    </div></section>` : '';
-  const not = k.not ? `<section class="bolum" style="padding-top:0">
-    <div style="background:var(--beyaz);border:1px solid var(--cizgi);padding:38px 40px;display:flex;gap:24px;align-items:flex-start">
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B87333" stroke-width="1.5" style="flex-shrink:0" aria-hidden="true"><path d="M12 3l8 4v5c0 4.5-3.2 8.3-8 9.5C7.2 20.3 4 16.5 4 12V7z"/><path d="M9 12l2 2 4-4"/></svg>
-      <div><h3 style="font-size:21px">${esc(k.not.baslik)}</h3>
-        <p style="font-size:14px;line-height:1.85;color:var(--metin);margin-top:10px">${esc(k.not.metin)}</p></div>
-    </div></section>` : '';
-  const akmese = k.slug === 'tiny-house' ? `<section class="bant">
-    <img src="${img('img-35')}" alt="Üretim tesisi" loading="lazy">
-    <div class="bant-ic"><div class="rozet"><i></i><span class="eyebrow">DEVAM EDEN PROJE</span></div>
-      <h2>${esc(D.akmese.baslik)}</h2><p>${esc(D.akmese.metin)}</p></div></section>` : '';
+    </div>`).join('');
 
-  const govde = `<section class="sayfa-bas">
-  <div class="eyebrow">ÜRETİM KOLU ${k.no}</div>
-  <div class="satir" style="margin-top:14px"><h1>${esc(k.ad)}</h1><p>${esc(k.giris)}</p></div>
-</section>
+  const ek = k.ek ? `<section class="bolum">
+    <div class="ic panel beyaz detay">
+      <div>
+        <span class="etiket">${IK.atolye}Detay</span>
+        <h2 class="b2" style="margin:12px 0 10px">${esc(k.ek.baslik)}</h2>
+        <p class="lead">${esc(k.ek.metin)}</p>
+      </div>
+      <div class="gorsel"><img src="${img(k.ek.gorsel)}" alt="${esc(k.ek.baslik)}" loading="lazy"></div>
+    </div></section>` : '';
+
+  const not = k.not ? `<section class="bolum">
+    <div class="ic panel beyaz" style="display:flex;gap:20px;align-items:flex-start">
+      <span class="sim" style="flex:0 0 auto;width:48px;height:48px;border-radius:15px;background:var(--zemin);display:grid;place-items:center;color:var(--bronz)">${IK.kalkan}</span>
+      <div><h3 class="b3">${esc(k.not.baslik)}</h3>
+        <p style="margin-top:8px">${esc(k.not.metin)}</p></div>
+    </div></section>` : '';
+
+  const akmese = k.slug === 'tiny-house' ? `<section class="bolum">
+    <div class="ic kartlar uc">
+      <div class="dk koyu">
+        <div><span class="etiket" style="background:rgba(255,255,255,.12);color:#E4C79E">${IK.kalkan}Devam eden proje</span>
+          <h2 class="b2" style="margin:14px 0 0;color:#fff">${esc(D.akmese.baslik)}</h2>
+          <p>${esc(D.akmese.metin)}</p></div>
+        <a class="dg bronz" href="${B}#teklif">Bilgi alın</a>
+      </div>
+      ${gorselKart('img-35', 'Üretim tesisi', 'Üretim tesisi', '<span>Tamamlanma aşamasındaki ünite</span>', { uzun: true, sim: IK.atolye })}
+      ${gorselKart('img-28', 'Merdiven içi depolama detayı', 'İç mekân detayı', '<span>Merdiven içi depolama</span>', { uzun: true, sim: IK.ev })}
+    </div></section>` : '';
+
+  const govde = `
 <section class="bolum">
-  <div class="eyebrow" style="margin-bottom:18px">SEÇENEKLER</div>
-  ${secici(k.secenekler, i === 1)}
+  <div class="ic hero" style="min-height:clamp(320px,36vw,420px)">
+    <img src="${img(k.gorsel)}" alt="${esc(k.ad)} üretimi" fetchpriority="high">
+    <span class="hero-rozet"><i></i>Üretim kolu ${k.no}</span>
+    <div class="hero-yazi">
+      <h1 style="font-size:clamp(2.25rem,1.2rem + 4vw,4rem);letter-spacing:-.02em;font-family:Inter,sans-serif;font-weight:700;line-height:1.05">${esc(k.ad)}</h1>
+      <p style="margin-top:12px">${esc(k.giris)}</p>
+      <div class="dgler"><a class="dg bronz" href="${B}#teklif">Teklif Al</a>
+        <a class="dg cam" href="tel:${D.marka.telefonHam}">${IK.tel}${D.marka.telefon}</a></div>
+    </div>
+  </div>
 </section>
-${ek}${not}${akmese}${iletisim()}`;
+
+<section class="bolum">
+  <div class="ic panel">
+    <div class="bas">
+      <div><span class="etiket">${IK.katman}Seçenekler</span>
+        <h2 class="b2" style="margin-top:12px">${esc(k.ad)} çeşitleri</h2></div>
+      <p>Bir seçeneği açın; kapsamı, kullanım alanlarını ve uygulamadan bir kareyi görün.</p>
+    </div>
+    <div class="sekmeler" role="tablist" aria-label="${esc(k.ad)} seçenekleri">${dugme}</div>
+    ${panel}
+  </div>
+</section>
+${ek}${not}${akmese}${surecBandi()}${iletisim()}`;
 
   return belge({
     baslik: `${k.seo} | Global Yapı Geliştirme`,
@@ -278,14 +418,14 @@ ${ek}${not}${akmese}${iletisim()}`;
 
 function yardimci(baslik, metin) {
   return belge({
-    baslik: `${baslik} | ${D.marka.ad}`, desc: metin, slug: '', aktif: '',
-    sema: kurulus,
-    govde: `<section class="bolum" style="min-height:52vh;display:flex;flex-direction:column;justify-content:center">
-      <div class="eyebrow">${esc(D.marka.kisa)}</div>
-      <h1 style="font-size:clamp(30px,4vw,46px);margin:14px 0 18px">${esc(baslik)}</h1>
-      <p style="font-size:15px;color:var(--metin);max-width:520px">${esc(metin)}</p>
-      <a class="btn" style="margin-top:30px;align-self:flex-start" href="${B}">ANA SAYFAYA DÖN</a>
-    </section>`
+    baslik: `${baslik} | ${D.marka.ad}`, desc: metin, slug: '', aktif: '', sema: kurulus,
+    govde: `<section class="bolum son">
+      <div class="ic panel" style="min-height:46vh;display:flex;flex-direction:column;justify-content:center">
+        <span class="etiket">${esc(D.marka.kisa)}</span>
+        <h1 class="b1" style="margin:14px 0 12px">${esc(baslik)}</h1>
+        <p class="lead">${esc(metin)}</p>
+        <div class="dgler" style="margin-top:24px"><a class="dg koyu" href="${B}">Ana sayfaya dön</a></div>
+      </div></section>`
   });
 }
 
@@ -298,10 +438,10 @@ fs.copyFileSync(path.join(root, 'src/styles.css'), path.join(dist, 'styles.css')
 fs.copyFileSync(path.join(root, 'src/amblem.svg'), path.join(dist, 'amblem.svg'));
 
 fs.writeFileSync(path.join(dist, 'index.html'), anaSayfa());
-D.kollar.forEach((k, i) => {
+D.kollar.forEach((k) => {
   const d = path.join(dist, k.slug);
   fs.mkdirSync(d, { recursive: true });
-  fs.writeFileSync(path.join(d, 'index.html'), kolSayfasi(k, i));
+  fs.writeFileSync(path.join(d, 'index.html'), kolSayfasi(k));
 });
 fs.writeFileSync(path.join(dist, '404.html'),
   yardimci('Sayfa bulunamadı', 'Aradığınız sayfa taşınmış veya kaldırılmış olabilir.'));
