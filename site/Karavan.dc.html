@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Questrial&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; color: #2F3336; background: #F5F3F0; }
+    a { color: #B87333; text-decoration: none; }
+    a:hover { color: #96601F; }
+    h1, h2, h3 { font-family: Questrial, system-ui, sans-serif; font-weight: 400; margin: 0; }
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #F5F3F0;">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 20px 72px; background: #FFFFFF; border-bottom: 1px solid #E4E0D9;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 70 810 930" style="height:36px;width:auto;flex-shrink:0"><path d="M 0 1000 L 0 299 L 405 70 L 810 299 L 769.4 362.2 L 405 156.2 L 75 342.8 L 75 910 L 374 910 L 374 750 L 451 750 L 451 1000 Z" fill="#2F3336"/><path d="M 247 585 L 560 585 L 640 675 L 247 675 Z" fill="#2F3336"/><rect x="342" y="300" width="48" height="56" fill="#2F3336"/><rect x="342" y="382" width="48" height="56" fill="#2F3336"/><rect x="420" y="300" width="48" height="56" fill="#2F3336"/><rect x="420" y="382" width="48" height="56" fill="#2F3336"/><path d="M 810 348 L 645 500 L 645 600 L 810 462 Z" fill="#B87333"/><path d="M 557 675 L 632 675 L 632 1000 L 557 1000 Z" fill="#B87333"/></svg>
+      <div>
+        <div style="font-family: Questrial, sans-serif; font-size: 21px; letter-spacing: 0.26em; line-height: 1;">GLOBAL</div>
+        <div style="font-size: 8px; letter-spacing: 0.3em; color: #B87333; margin-top: 5px;">YAPI GELİŞTİRME A.Ş.</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 34px; font-size: 13px; letter-spacing: 0.09em;">
+      <a href="#" style="color: #2F3336;">TINY HOUSE</a>
+      <a href="#" style="color: #2F3336;">MOBİLYA</a>
+      <a href="#" style="color: #B87333; border-bottom: 1px solid #B87333; padding-bottom: 3px;">KARAVAN</a>
+      <a href="#" style="color: #2F3336;">PROJELER</a>
+      <a href="#" style="color: #2F3336;">HAKKIMIZDA</a>
+    </div>
+    <a href="#" style="background: #B87333; color: #FFFFFF; padding: 13px 24px; font-size: 12px; letter-spacing: 0.14em;">TEKLİF AL</a>
+  </div>
+
+  <div style="padding: 62px 72px 44px; background: #FFFFFF; border-bottom: 1px solid #E4E0D9;">
+    <div style="font-size: 11px; letter-spacing: 0.26em; color: #B87333; margin-bottom: 16px;">ÜRETİM KOLU 03</div>
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 60px;">
+      <h1 style="font-size: 50px; line-height: 1.12;">Karavan</h1>
+      <p style="font-size: 14.5px; line-height: 1.85; color: #6A665F; max-width: 520px;">
+        Karayolları şartnamesine uygun ticari karavan çeşitleri ve özel üretim yaşam
+        karavanları. Şasi seçiminden iç yerleşime kadar hareket halindeki yük hesaba katılır.
+      </p>
+    </div>
+  </div>
+
+  <div style="padding: 62px 72px;">
+    <div style="font-size: 11px; letter-spacing: 0.26em; color: #B87333; margin-bottom: 20px;">ÇEŞİTLER</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;">
+      <sc-for list="{{sekmeler}}" as="t" hint-placeholder-count="3">
+        <div onClick="{{ t.pick }}" style="{{ t.chip }}">{{ t.ad }}</div>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 34px; align-items: stretch;">
+      <div style="position: relative; min-height: 420px; overflow: hidden; background: #E4E0D9;">
+        <img src="{{secili.gorsel}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #E4E0D9; padding: 44px 40px; display: flex; flex-direction: column;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #B87333; letter-spacing: 0.1em;">{{secili.kod}}</div>
+        <h2 style="font-size: 32px; margin-top: 14px;">{{secili.ad}}</h2>
+        <p style="font-size: 14.5px; line-height: 1.85; color: #6A665F; margin-top: 18px;">{{secili.aciklama}}</p>
+        <div style="height: 1px; background: #E4E0D9; margin: 30px 0;"></div>
+        <div style="font-size: 11px; letter-spacing: 0.2em; color: #A6A39A; margin-bottom: 16px;">KAPSAM</div>
+        <ul style="display: flex; flex-direction: column; gap: 12px;">
+          <sc-for list="{{secili.kapsam}}" as="k" hint-placeholder-count="4">
+            <li style="display: flex; align-items: flex-start; gap: 11px; font-size: 13.5px; color: #4A473F; line-height: 1.6;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B87333" stroke-width="2" style="flex-shrink: 0; margin-top: 3px;"><path d="M4 12l6 6L20 6"/></svg>
+              <span>{{k}}</span>
+            </li>
+          </sc-for>
+        </ul>
+        <div style="flex-grow: 1;"></div>
+        <a href="#" style="background: #B87333; color: #FFFFFF; padding: 16px 0; text-align: center; font-size: 12.5px; letter-spacing: 0.14em; margin-top: 32px;">TEKLİF AL</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 0 72px 78px;">
+    <div style="background: #FFFFFF; border: 1px solid #E4E0D9; padding: 44px 48px; display: flex; gap: 28px; align-items: flex-start;">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B87333" stroke-width="1.5" style="flex-shrink: 0;"><path d="M12 3l8 4v5c0 4.5-3.2 8.3-8 9.5C7.2 20.3 4 16.5 4 12V7z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div>
+        <h3 style="font-size: 21px;">Karayolları şartnamesi</h3>
+        <p style="font-size: 14px; line-height: 1.85; color: #6A665F; margin-top: 12px; max-width: 880px;">
+          Ticari karavanlarımız Karayolları şartnamesine uygun üretilir. Tescil, ölçü ve ağırlık
+          sınırları yürürlükteki mevzuata tabidir; proje başlangıcında hedef kullanım şeklini
+          birlikte değerlendirip uygun şasi ve ölçüyü belirliyoruz.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { secili: 0 }; }
+  veri() {
+    return [
+      { kod: 'TİCARİ', ad: 'Ticari Karavan', gorsel: 'ticari.jpg',
+        aciklama: 'Karayolları şartnamesine uygun üretilen, işletmeye hazır ticari üniteler. Tezgâh, ekipman yerleşimi ve altyapı kurulu halde teslim edilir.',
+        kapsam: ['Şartnameye uygun şasi ve gövde', 'Satış tezgâhı ve ekipman yerleşimi', 'Elektrik panosu ve priz hattı', 'Temiz ve atık su bağlantısı', 'Markaya göre cephe giydirme'] },
+      { kod: 'YAŞAM', ad: 'Yaşam Karavanı', gorsel: 'karavan.jpg',
+        aciklama: 'Özel üretim yaşam karavanları. Yolda dayanacak, durduğunda ev gibi olacak şekilde; ağırlık dağılımı ve bağlantı detayları buna göre çözülür.',
+        kapsam: ['Şasi üzerine çelik iskelet, izolasyonlu gövde', 'Mutfak ünitesi, evye ve tezgâh altı depolama', 'Islak hacim, temiz ve atık su deposu', '12V / 220V elektrik altyapısı', 'Yatak platformu ve kaldırılabilir depolama'] },
+      { kod: 'ÖZEL', ad: 'Özel Çözüm', gorsel: 'karavan.jpg',
+        aciklama: 'Standart dışı kullanım senaryoları için projeye özel karavan üretimi. Elinizdeki fikir ya da çizim üzerinden üretilebilirlik değerlendirmesiyle başlıyoruz.',
+        kapsam: ['Projeye özel gövde ölçüsü', 'Özel ekipman ve donanım entegrasyonu', 'Mobil hizmet ve tanıtım üniteleri', 'Üretilebilirlik değerlendirmesi ve revizyon'] }
+    ];
+  }
+  renderVals() {
+    const v = this.veri(), s = this.state.secili;
+    return {
+      sekmeler: v.map((m, i) => ({
+        ad: m.ad, pick: () => this.setState({ secili: i }),
+        chip: i === s
+          ? 'padding: 12px 22px; font-size: 12.5px; letter-spacing: 0.12em; cursor: pointer; background: #2F3336; color: #F5F3F0; border: 1px solid #2F3336;'
+          : 'padding: 12px 22px; font-size: 12.5px; letter-spacing: 0.12em; cursor: pointer; background: #FFFFFF; color: #6A665F; border: 1px solid #E4E0D9;'
+      })),
+      secili: v[s]
+    };
+  }
+}
+</script>
+</body>
+</html>

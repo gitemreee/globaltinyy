@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Questrial&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; color: #2F3336; background: #F5F3F0; }
+    a { color: #B87333; text-decoration: none; }
+    a:hover { color: #96601F; }
+    h1, h2, h3 { font-family: Questrial, system-ui, sans-serif; font-weight: 400; margin: 0; }
+    p { margin: 0; }
+    ul { margin: 0; padding: 0; list-style: none; }
+  </style>
+</helmet>
+
+<div style="width: 390px; background: #F5F3F0;">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: #FFFFFF; border-bottom: 1px solid #E4E0D9;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 70 810 930" style="height:28px;width:auto;flex-shrink:0"><path d="M 0 1000 L 0 299 L 405 70 L 810 299 L 769.4 362.2 L 405 156.2 L 75 342.8 L 75 910 L 374 910 L 374 750 L 451 750 L 451 1000 Z" fill="#2F3336"/><path d="M 247 585 L 560 585 L 640 675 L 247 675 Z" fill="#2F3336"/><rect x="342" y="300" width="48" height="56" fill="#2F3336"/><rect x="342" y="382" width="48" height="56" fill="#2F3336"/><rect x="420" y="300" width="48" height="56" fill="#2F3336"/><rect x="420" y="382" width="48" height="56" fill="#2F3336"/><path d="M 810 348 L 645 500 L 645 600 L 810 462 Z" fill="#B87333"/><path d="M 557 675 L 632 675 L 632 1000 L 557 1000 Z" fill="#B87333"/></svg>
+      <div>
+        <div style="font-family: Questrial, sans-serif; font-size: 16px; letter-spacing: 0.24em; line-height: 1;">GLOBAL</div>
+        <div style="font-size: 6.5px; letter-spacing: 0.26em; color: #B87333; margin-top: 4px;">YAPI GELİŞTİRME A.Ş.</div>
+      </div>
+    </div>
+    <div onClick="{{ menuAc }}" style="width: 46px; height: 46px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; border: 1px solid #E4E0D9;">
+      <span style="width: 19px; height: 1.6px; background: #2F3336;"></span>
+      <span style="width: 19px; height: 1.6px; background: #2F3336;"></span>
+      <span style="width: 19px; height: 1.6px; background: #2F3336;"></span>
+    </div>
+  </div>
+
+  <sc-if value="{{menuAcik}}" hint-placeholder-val="{{ false }}">
+    <div style="background: #2F3336; padding: 10px 20px 22px;">
+      <ul style="display: flex; flex-direction: column;">
+        <li style="border-bottom: 1px solid rgba(245,243,240,0.12);"><a href="#" style="display: block; padding: 17px 0; color: #F5F3F0; font-size: 14px; letter-spacing: 0.12em;">TINY HOUSE</a></li>
+        <li style="border-bottom: 1px solid rgba(245,243,240,0.12);"><a href="#" style="display: block; padding: 17px 0; color: #F5F3F0; font-size: 14px; letter-spacing: 0.12em;">MOBİLYA</a></li>
+        <li style="border-bottom: 1px solid rgba(245,243,240,0.12);"><a href="#" style="display: block; padding: 17px 0; color: #F5F3F0; font-size: 14px; letter-spacing: 0.12em;">KARAVAN</a></li>
+        <li style="border-bottom: 1px solid rgba(245,243,240,0.12);"><a href="#" style="display: block; padding: 17px 0; color: #F5F3F0; font-size: 14px; letter-spacing: 0.12em;">PROJELER</a></li>
+        <li><a href="#" style="display: block; padding: 17px 0; color: #F5F3F0; font-size: 14px; letter-spacing: 0.12em;">HAKKIMIZDA</a></li>
+      </ul>
+    </div>
+  </sc-if>
+
+  <div style="position: relative; height: 480px; overflow: hidden; background: #2F3336;">
+    <img src="hero.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(47,51,54,0.86) 0%, rgba(47,51,54,0.66) 45%, rgba(47,51,54,0.94) 100%);"></div>
+    <div style="position: relative; padding: 34px 20px; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+      <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 18px;">
+        <span style="width: 6px; height: 6px; background: #B87333; border-radius: 50%;"></span>
+        <span style="font-size: 9px; letter-spacing: 0.2em; color: #B87333;">AKMEŞE · 260 ÜNİTE ÜRETİMDE</span>
+      </div>
+      <h1 style="font-size: 33px; line-height: 1.18; color: #F5F3F0;">Tiny house, mobilya ve karavanda tek üretim çatısı</h1>
+      <p style="font-size: 14px; line-height: 1.75; color: #CFCBC4; margin-top: 16px;">
+        Yedi yıllık deneyim, yaklaşık 200 tamamlanmış iş.
+      </p>
+      <a href="#" style="background: #B87333; color: #FFFFFF; padding: 16px 0; text-align: center; font-size: 12.5px; letter-spacing: 0.13em; margin-top: 26px;">TEKLİF AL</a>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); background: #FFFFFF; border-bottom: 1px solid #E4E0D9;">
+    <div style="padding: 22px 14px; border-right: 1px solid #E4E0D9; text-align: center;">
+      <div style="font-family: Questrial, sans-serif; font-size: 26px;">7</div>
+      <div style="font-size: 8.5px; letter-spacing: 0.14em; color: #A6A39A; margin-top: 6px;">YIL</div>
+    </div>
+    <div style="padding: 22px 14px; border-right: 1px solid #E4E0D9; text-align: center;">
+      <div style="font-family: Questrial, sans-serif; font-size: 26px;">~200</div>
+      <div style="font-size: 8.5px; letter-spacing: 0.14em; color: #A6A39A; margin-top: 6px;">İŞ</div>
+    </div>
+    <div style="padding: 22px 14px; text-align: center;">
+      <div style="font-family: Questrial, sans-serif; font-size: 26px; color: #B87333;">260</div>
+      <div style="font-size: 8.5px; letter-spacing: 0.14em; color: #A6A39A; margin-top: 6px;">ÜNİTE</div>
+    </div>
+  </div>
+
+  <div style="padding: 40px 20px;">
+    <div style="font-size: 10px; letter-spacing: 0.22em; color: #B87333; margin-bottom: 12px;">NE ÜRETİYORUZ</div>
+    <h2 style="font-size: 27px; margin-bottom: 26px;">Üç kol, tek atölye</h2>
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <div style="background: #FFFFFF; border: 1px solid #E4E0D9;">
+        <img src="th-dis.jpg" alt="" style="width: 100%; height: 176px; object-fit: cover; display: block;">
+        <div style="padding: 22px 20px 26px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #B87333;">01</div>
+          <h3 style="font-size: 21px; margin-top: 9px;">Tiny House</h3>
+          <p style="font-size: 13px; line-height: 1.75; color: #6A665F; margin-top: 10px;">1+0'dan 3+1 ve mega boya; ofis ve ticari konseptler.</p>
+          <a href="#" style="display: inline-block; margin-top: 16px; font-size: 11.5px; letter-spacing: 0.13em;">İNCELE →</a>
+        </div>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #E4E0D9;">
+        <img src="mob-mutfak.jpg" alt="" style="width: 100%; height: 176px; object-fit: cover; display: block;">
+        <div style="padding: 22px 20px 26px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #B87333;">02</div>
+          <h3 style="font-size: 21px; margin-top: 9px;">Mobilya</h3>
+          <p style="font-size: 13px; line-height: 1.75; color: #6A665F; margin-top: 10px;">Ev, ofis ve otel projelerinde ölçüye özel üretim.</p>
+          <a href="#" style="display: inline-block; margin-top: 16px; font-size: 11.5px; letter-spacing: 0.13em;">İNCELE →</a>
+        </div>
+      </div>
+      <div style="background: #FFFFFF; border: 1px solid #E4E0D9;">
+        <img src="karavan.jpg" alt="" style="width: 100%; height: 176px; object-fit: cover; display: block;">
+        <div style="padding: 22px 20px 26px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #B87333;">03</div>
+          <h3 style="font-size: 21px; margin-top: 9px;">Karavan</h3>
+          <p style="font-size: 13px; line-height: 1.75; color: #6A665F; margin-top: 10px;">Şartnameye uygun ticari ve özel yaşam karavanları.</p>
+          <a href="#" style="display: inline-block; margin-top: 16px; font-size: 11.5px; letter-spacing: 0.13em;">İNCELE →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #2F3336; padding: 40px 20px;">
+    <div style="font-size: 10px; letter-spacing: 0.22em; color: #B87333; margin-bottom: 12px;">SİPARİŞ HATTI</div>
+    <h2 style="font-size: 25px; color: #F5F3F0; line-height: 1.25;">Projenizi anlatın</h2>
+    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 26px;">
+      <a href="#" style="background: #B87333; color: #FFFFFF; padding: 17px 0; text-align: center; font-size: 12.5px; letter-spacing: 0.13em;">+90 546 655 70 70</a>
+      <a href="#" style="border: 1px solid rgba(245,243,240,0.4); color: #F5F3F0; padding: 17px 0; text-align: center; font-size: 12.5px; letter-spacing: 0.13em;">WHATSAPP'TAN YAZIN</a>
+    </div>
+    <p style="font-size: 11.5px; color: #A6A39A; margin-top: 26px; line-height: 1.9;">
+      info@globalinvestment.com.tr<br>globalyapicelik.net
+    </p>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { menu: false }; }
+  renderVals() {
+    return {
+      menuAcik: this.state.menu,
+      menuAc: () => this.setState({ menu: !this.state.menu })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -27,3 +27,6 @@ dist/
 
 # Katalog PDF ciktisi - kaynaktan uretilir
 katalog/*.pdf
+
+# Tasarim tuvali ciktisi (seed edilmis payload, ~3 MB)
+site/global-yapi-web-sitesi.html

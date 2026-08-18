@@ -1,0 +1,16 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html",      "title": "Ana Sayfa",  "x": 0,    "y": 0, "w": 1440, "h": 2680 },
+    { "file": "TinyHouse.dc.html", "title": "Tiny House", "x": 1560, "y": 0, "w": 1440, "h": 1760 },
+    { "file": "Mobilya.dc.html",   "title": "Mobilya",    "x": 3120, "y": 0, "w": 1440, "h": 1560 },
+    { "file": "Karavan.dc.html",   "title": "Karavan",    "x": 4680, "y": 0, "w": 1440, "h": 1420 },
+    { "file": "Mobil.dc.html",     "title": "Mobil",      "x": 6240, "y": 0, "w": 390,  "h": 2160 }
+  ],
+  "annotations": [
+    { "id": "brief", "x": 0, "y": -190, "w": 460,
+      "text": "GLOBAL YAPI GELİŞTİRME A.Ş. — site yapısı\n\n7 yıl · ~200 tamamlanmış iş · Akmeşe'de 260 ünite üretimde.\nÜç üretim kolu: tiny house, mobilya, karavan.\n\nModel/kategori seçicileri çalışıyor — tıklayıp içeriğin\ndeğiştiğini görebilirsiniz. Mobilde menü açılıp kapanıyor." },
+    { "id": "eksik", "x": 4680, "y": -190, "w": 420,
+      "text": "DOLDURULMASI GEREKENLER\n\n· Atölye adresi (ana sayfada [ATÖLYE ADRESİ])\n· Gerçek proje fotoğrafları — şu an mevcut\n  arşivden seçildi\n· Otel/ofis mobilya işlerine ait görsel yok" }
+  ],
+  "launch": { "view": "canvas" }
+}
